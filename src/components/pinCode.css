@@ -1,0 +1,79 @@
+/* Main input container */
+.input-container {
+    perspective: 1000px; /* Gives the input field a 3D perspective */
+  }
+  
+  /* Input field with 3D effect */
+  input[type=text] {
+    --w: 1ch;   /* Width per letter */
+    --g: .15em; /* Gap between letters */
+    --b: 2px;   /* Border thickness */
+    --n: 6;     /* Number of characters */
+  
+    --c: #888; /* Default border color */
+    font-size: 70px;
+    line-height: 1.5;
+    letter-spacing: var(--w);
+    font-family: monospace;
+    width: calc(var(--n)*(1ch + var(--w)));
+    padding-left: calc((var(--w) - var(--g)) / 2);
+    clip-path: inset(0 calc(var(--w)/2) 0 0);
+    border: none;
+    outline: 0;
+    background: repeating-linear-gradient(90deg,
+      var(--c) 0 var(--b), #0000 0 calc(1ch + var(--w) - var(--g) - var(--b)),
+      var(--c) 0 calc(1ch + var(--w) - var(--g)), #0000 0 2ch),
+      conic-gradient(at calc(100% - var(--g) - 1px) var(--b), #0000 75%, var(--c) 0) 
+      0 0 / calc(1ch + var(--w)) calc(100% - var(--b));
+    
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out; /* Smooth transition on hover */
+    
+    /* 3D effect with shadows */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 
+                inset 0 0 10px rgba(0,0,0,0.2);
+    
+    transform: rotateX(10deg) rotateY(10deg); /* Initial 3D rotation */
+  }
+  
+  /* Focus state: Deepen the 3D effect */
+  input[type=text]:focus-visible {
+    --c: #000; /* Change border color on focus */
+    
+    /* Enhance 3D effect */
+    transform: rotateX(0deg) rotateY(0deg) scale(1.05); /* Rotate back to flat and scale slightly */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 
+                inset 0 0 15px rgba(0,0,0,0.3); /* Deeper shadow on focus */
+  }
+  
+  /* Hover effect: Rotate for 3D interaction */
+  input[type=text]:hover {
+    transform: rotateX(15deg) rotateY(15deg) scale(1.02); /* Extra rotation on hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  }
+  
+  /* Subtle animation when the field gains focus */
+  input[type=text]:focus-visible {
+    animation: glow 1s infinite alternate;
+  }
+  
+  /* Animation keyframes for glowing effect */
+  @keyframes glow {
+    0% {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 
+                  0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 
+                  0 0 30px rgba(255, 255, 255, 0.6);
+    }
+  }
+  
+  /* General styling for body */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    background: #f0f0f0; /* Subtle background to contrast the input */
+  }
+  
